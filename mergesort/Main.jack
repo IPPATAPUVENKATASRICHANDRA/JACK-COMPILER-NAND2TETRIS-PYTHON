@@ -1,0 +1,105 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: Main.jack
+
+/** Computes sorting for the sequence of integers. */
+class Main {
+    function void main() {
+        var Array A;
+        var int i,length;
+	
+        let length = Keyboard.readInt("Number of elements in the array: ");
+        let A = Array.new(length);
+        let i = 0;
+	
+	while (i < length) {
+            let A[i] = Keyboard.readInt("Enter the next number: ");
+            let i = i + 1;
+        }
+        do Output.printString("Unsorted Array: ");
+        do Main.print(A,length);
+        do Main.sorting_array(A,0,length-1);
+        do Output.println();
+        do Output.printString("Sorted Array: ");
+        do Main.print(A,length);
+        return;
+	}
+    function void merge_array(Array A,int left,int mid , int right){
+        var int m, n, k;
+        var int len1, len2;
+        var Array L;
+        var Array R;
+
+        let len1 = mid - left + 1;
+        let len2 = right - mid;
+
+        let L = Array.new(len1);
+        let R = Array.new(len2);
+
+
+        let m = 0;
+        while (m < len1) {
+            let L[m] = A[left + m];
+            let m = m + 1;
+        }
+
+        let n = 0;
+        while (n < len2) {
+            let R[n] = A[mid + 1 + n];
+            let n = n + 1;
+        }
+
+        let m = 0;
+        let n = 0;
+        let k = left;
+
+        while ( (m < len1) & (n < len2)){
+            if (L[m] > R[n]) {
+                let A[k] = R[n];
+                let n = n + 1;
+            }
+            else {
+                let A[k] = L[m];
+                let m = m + 1;
+            }
+            let k = k + 1;
+        }
+
+        while (m < len1) {
+            let A[k] = L[m];
+            let m = m + 1;
+            let k = k + 1;
+        }
+
+        while (n < len2) {
+            let A[k] = R[n];
+            let n = n + 1;
+            let k = k + 1;
+        }
+        return;
+}
+
+    function void sorting_array(Array A, int left, int right) {
+        var int mid;
+        if (left < right) {
+            let mid = Math.divide((left + right), 2);
+            do Main.sorting_array(A, left, mid);
+            do Main.sorting_array(A, mid + 1, right);
+            do Main.merge_array(A, left, mid, right);
+        }
+        return;
+    }
+
+    function void print(Array A, int length) {
+        var int indx;
+        let indx = 0;
+        while (indx < length) {
+            do Output.printInt(A[indx]);
+            do Output.printString(" ");
+            let indx = indx + 1;
+        }
+        return;
+    }
+}
+

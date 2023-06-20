@@ -1,0 +1,47 @@
+class Main {
+        function int search(Array arr, int first, int last, int key) {
+        var int mid;
+
+        while (first < (last+1)) {
+            let mid = (first + last) / 2;
+            
+
+            if (arr[mid] = key) {
+                return mid;
+            } 
+
+            if (arr[mid] < key) {
+                let first = mid + 1;
+            }
+
+            if (arr[mid] > key)  {
+                let last = mid - 1;
+            }            
+        }
+        return -1;
+}
+function void main() {
+        var Array arr;
+        var int n, i, key, first, last, out;
+        let n = Keyboard.readInt("Enter the size of an array: ");
+        let arr = Array.new(n);
+        let i = 0;
+        while (i < n) {
+            let arr[i] = Keyboard.readInt("Enter element: ");
+            let i = i + 1;
+        }
+
+        let key = Keyboard.readInt("Enter the key value to be found: ");
+        let first=0;
+        let last = n - 1;
+        let out = Main.search(arr,first,last,key);
+        if (out = -1) {
+            do Output.printString("Element not found!");
+        } 
+        else {
+            do Output.printString("Element found at index ");
+            do Output.printInt(out);
+            }
+        return;
+        }
+}
